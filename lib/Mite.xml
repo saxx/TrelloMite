@@ -1,0 +1,799 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mite</name>
+    </assembly>
+    <members>
+        <member name="T:Mite.IDataMapper`1">
+            <summary>
+            Defines generic interface for data mapping
+            </summary>
+            <typeparam name="T">Type which should be mapped</typeparam>
+        </member>
+        <member name="M:Mite.IDataMapper`1.Create(`0)">
+            <summary>
+            Creates the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>The created item.</returns>
+        </member>
+        <member name="M:Mite.IDataMapper`1.Update(`0)">
+            <summary>
+            Updates the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>The updated item.</returns>
+        </member>
+        <member name="M:Mite.IDataMapper`1.Delete(`0)">
+            <summary>
+            Deletes the specified item.
+            </summary>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Mite.IDataMapper`1.GetById(System.Object)">
+            <summary>
+            Returns the item with the specified id
+            </summary>
+            <param name="id">The id.</param>
+            <returns>The requested item</returns>
+        </member>
+        <member name="M:Mite.IDataMapper`1.GetAll">
+            <summary>
+            Returns all items of the type
+            </summary>
+            <returns>List of items</returns>
+        </member>
+        <member name="M:Mite.IDataMapper`1.GetByCriteria(Mite.QueryExpression)">
+            <summary>
+            Gets all items matching the criteria.
+            </summary>
+            <param name="queryExpression">The query expression.</param>
+            <returns>List of items which matched the criteria</returns>
+        </member>
+        <member name="P:Mite.IDataMapper`1.CriteriaProperties">
+            <summary>
+            Gets the available criteria properties.
+            </summary>
+            <value>
+            The criteria properties.
+            </value>
+        </member>
+        <member name="T:Mite.Condition">
+            <summary>
+            Condition for querying
+            </summary>
+        </member>
+        <member name="P:Mite.Condition.Operator">
+            <summary>
+            Gets or sets the operator for this condition.
+            </summary>
+            <value>The operator.</value>
+        </member>
+        <member name="P:Mite.Condition.Value">
+            <summary>
+            Gets or sets the compare value.
+            </summary>
+            <value>The value.</value>
+        </member>
+        <member name="P:Mite.Condition.Property">
+            <summary>
+            Gets or sets the property on which the operator will be used.
+            </summary>
+            <value>The property.</value>
+        </member>
+        <member name="T:Mite.ConditionOperator">
+            <summary>
+            Condition operator for querying
+            </summary>
+        </member>
+        <member name="F:Mite.ConditionOperator.Equal">
+            <summary>
+            Equality
+            </summary>
+        </member>
+        <member name="T:Mite.MiteConfiguration">
+            <summary>
+            Configuration for data context
+            </summary>
+        </member>
+        <member name="M:Mite.MiteConfiguration.#ctor(System.Uri,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteConfiguration"/> class.
+            </summary>
+            <param name="domain">The domain.</param>
+            <param name="apiKey">The API key.</param>
+        </member>
+        <member name="M:Mite.MiteConfiguration.#ctor(System.Uri,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteConfiguration"/> class.
+            </summary>
+            <param name="domain">The domain.</param>
+            <param name="user">The user.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="M:Mite.MiteConfiguration.ReadFromConfig">
+            <summary>
+            Reads the configuration from the app.config or web.config.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Mite.MiteConfiguration.ApiKey">
+            <summary>
+            Gets or sets the API key.
+            </summary>
+            <value>The API key.</value>
+        </member>
+        <member name="P:Mite.MiteConfiguration.User">
+            <summary>
+            Gets or sets the user used for API access.
+            </summary>
+            <value>The user.</value>
+        </member>
+        <member name="P:Mite.MiteConfiguration.Password">
+            <summary>
+            Gets or sets the password used for API access.
+            </summary>
+            <value>The password.</value>
+        </member>
+        <member name="P:Mite.MiteConfiguration.Domain">
+            <summary>
+            Gets or sets the sub domain.
+            </summary>
+            <value>The sub domain.</value>
+        </member>
+        <member name="P:Mite.MiteConfiguration.Proxy">
+            <summary>
+            Gets or sets the proxy.
+            </summary>
+            <value>The proxy.</value>
+        </member>
+        <member name="T:Mite.BaseDataContext">
+            <summary>
+            Base class for all data contexts
+            </summary>
+        </member>
+        <member name="T:Mite.IDataContext">
+            <summary>
+            Context for persistence
+            </summary>
+        </member>
+        <member name="M:Mite.IDataContext.GetAll``1">
+            <summary>
+            Gets all items of the specified type.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <returns>List of items</returns>
+        </member>
+        <member name="M:Mite.IDataContext.GetByCriteria``1(Mite.QueryExpression)">
+            <summary>
+            Gets a list of items by criteria.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="queryExpression">The query expression.</param>
+            <returns>List of itmes which matches the query</returns>
+        </member>
+        <member name="M:Mite.IDataContext.GetById``1(System.Object)">
+            <summary>
+            Returns the item with the specified id.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="id">The id.</param>
+            <returns>The item</returns>
+        </member>
+        <member name="M:Mite.IDataContext.Create``1(``0)">
+            <summary>
+            Creates the specified item.
+            </summary>
+            <typeparam name="T">The type to create</typeparam>
+            <param name="item">The item.</param>
+            <returns>The created item</returns>
+        </member>
+        <member name="M:Mite.IDataContext.Delete``1(``0)">
+            <summary>
+            Deletes the specified item.
+            </summary>
+            <typeparam name="T">The type to delete</typeparam>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Mite.IDataContext.Update``1(``0)">
+            <summary>
+            Updates the specified item.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="item">The item.</param>
+            <returns>The updated item</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.GetDataMapper``1">
+            <summary>
+            Gets a data mapper for a type.
+            </summary>
+            <typeparam name="T">The type for which a data mapper should be retrieved</typeparam>
+            <returns>A data mapper for the type</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.Dispose">
+            <summary>
+            Disposes the data context
+            </summary>
+            <remarks>
+            Not disposing anything at the moment. Only syntactic sugar
+            </remarks>
+        </member>
+        <member name="M:Mite.BaseDataContext.GetAll``1">
+            <summary>
+            Gets all items of the specified type.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <returns>List of items</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.GetByCriteria``1(Mite.QueryExpression)">
+            <summary>
+            Gets a list of items by criteria.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="queryExpression">The query expression.</param>
+            <returns>List of itmes which matches the query</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.GetById``1(System.Object)">
+            <summary>
+            Returns the item with the specified id.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="id">The id.</param>
+            <returns>The item</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.Create``1(``0)">
+            <summary>
+            Creates the specified item.
+            </summary>
+            <typeparam name="T">The type to create</typeparam>
+            <param name="item">The item.</param>
+            <returns>The created item</returns>
+        </member>
+        <member name="M:Mite.BaseDataContext.Delete``1(``0)">
+            <summary>
+            Deletes the specified item.
+            </summary>
+            <typeparam name="T">The type to delete</typeparam>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Mite.BaseDataContext.Update``1(``0)">
+            <summary>
+            Updates the specified item.
+            </summary>
+            <typeparam name="T">The type to retreive</typeparam>
+            <param name="item">The item.</param>
+            <returns>The updated item</returns>
+        </member>
+        <member name="T:Mite.TimeEntryProxy">
+            <summary>
+            Proxy for the time entry class.
+            </summary>
+            <remarks>
+            Used for lazy loading of referenced entities
+            </remarks>
+        </member>
+        <member name="T:Mite.TimeEntry">
+            <summary>
+            A time entry
+            </summary>
+        </member>
+        <member name="T:Mite.DomainObject">
+            <summary>
+            Base class of all entities
+            </summary>
+        </member>
+        <member name="P:Mite.DomainObject.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Date">
+            <summary>
+            Gets or sets the date of the time entry.
+            </summary>
+            <value>The date.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Minutes">
+            <summary>
+            Gets or sets the amount of time in minutes.
+            </summary>
+            <value>The duration minutes.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Revenue">
+            <summary>
+            Gets or sets the revenue of this timespan.
+            </summary>
+            <value>The revenue.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Note">
+            <summary>
+            Gets or sets the note.
+            </summary>
+            <value>The note.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Project">
+            <summary>
+            Gets or sets the project.
+            </summary>
+            <value>The project.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.User">
+            <summary>
+            Gets or sets the user.
+            </summary>
+            <value>The user.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.Service">
+            <summary>
+            Gets or sets the service.
+            </summary>
+            <value>The service.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.CreatedOn">
+            <summary>
+            Gets or sets the date on which this item was created.
+            </summary>
+            <value>The date of creation.</value>
+        </member>
+        <member name="P:Mite.TimeEntry.UpdatedOn">
+            <summary>
+            Gets or sets the date on which this item was updated.
+            </summary>
+            <value>The date of last update.</value>
+        </member>
+        <member name="P:Mite.TimeEntryProxy.Service">
+            <summary>
+            Gets or sets the service for this time entry.
+            </summary>
+            <value>The service.</value>
+        </member>
+        <member name="P:Mite.TimeEntryProxy.Project">
+            <summary>
+            Gets or sets the project for this time entry.
+            </summary>
+            <value>The project.</value>
+        </member>
+        <member name="P:Mite.TimeEntryProxy.User">
+            <summary>
+            Gets or sets the user for this time entry.
+            </summary>
+            <value>The user.</value>
+        </member>
+        <member name="T:Mite.Customer">
+            <summary>
+            A customer
+            </summary>
+        </member>
+        <member name="P:Mite.Customer.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Mite.Customer.Note">
+            <summary>
+            Gets or sets the note.
+            </summary>
+            <value>The note.</value>
+        </member>
+        <member name="P:Mite.Customer.Archived">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Mite.Customer"/> is archived.
+            </summary>
+            <value><c>true</c> if archived; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Mite.Customer.CreatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Customer"/> was created
+            </summary>
+            <value>The created on.</value>
+        </member>
+        <member name="P:Mite.Customer.UpdatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Customer"/> was updated
+            </summary>
+            <value>The updated on.</value>
+        </member>
+        <member name="T:Mite.DefaultWebAdapter">
+            <summary>
+            Base class of all mite connectors
+            </summary>
+        </member>
+        <member name="M:Mite.DefaultWebAdapter.SendGetRequest(System.String)">
+            <summary>
+            Sends a HTTP get request.
+            </summary>
+            <param name="url">The url to which the request is send.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="M:Mite.DefaultWebAdapter.SendPostRequest(System.String,System.String)">
+            <summary>
+            Sends a HTTP post request.
+            </summary>
+            <param name="url">The url to which the request is send.</param>
+            <param name="data">The data which is posted.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="M:Mite.DefaultWebAdapter.SendPostRequest(System.String)">
+            <summary>
+            Sends a HTTP post request.
+            </summary>
+            <param name="url">The url to which the request is send.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="M:Mite.DefaultWebAdapter.SendPutRequest(System.String,System.String)">
+            <summary>
+            Sends a put request.
+            </summary>
+            <param name="url">The url to which the request is send.</param>
+            <param name="data">The data which is put.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="M:Mite.DefaultWebAdapter.SendDeleteRequest(System.String)">
+            <summary>
+            Sends a HTTP delete request.
+            </summary>
+            <param name="url">The url to which the request is send.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="T:Mite.RunningTimer">
+            <summary>
+            A running timer
+            </summary>
+        </member>
+        <member name="T:Mite.TimerBase">
+            <summary>
+            Base class for timers
+            </summary>
+        </member>
+        <member name="P:Mite.TimerBase.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="P:Mite.TimerBase.Minutes">
+            <summary>
+            Gets or sets the minutes which are elapsed on this timer.
+            </summary>
+            <value>The minutes.</value>
+        </member>
+        <member name="P:Mite.RunningTimer.Start">
+            <summary>
+            Gets or sets the start of the timer.
+            </summary>
+            <value>The start.</value>
+        </member>
+        <member name="T:Mite.StoppedTimer">
+            <summary>
+            A stopped timer
+            </summary>
+        </member>
+        <member name="T:Mite.Timer">
+            <summary>
+            A timer
+            </summary>
+        </member>
+        <member name="P:Mite.Timer.StoppedTimer">
+            <summary>
+            Gets or sets the stopped timer.
+            </summary>
+            <value>The stopped timer.</value>
+        </member>
+        <member name="P:Mite.Timer.RunningTimer">
+            <summary>
+            Gets or sets the running timer.
+            </summary>
+            <value>The running timer.</value>
+        </member>
+        <member name="P:Mite.Timer.TimeEntry">
+            <summary>
+            Gets or sets the time entry on which this timer is running.
+            </summary>
+            <value>The time entry.</value>
+        </member>
+        <member name="T:Mite.MiteDataContext">
+            <summary>
+            Data context for mite api
+            </summary>
+        </member>
+        <member name="M:Mite.MiteDataContext.#ctor(Mite.MiteConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteDataContext"/> class.
+            </summary>
+            <param name="miteConfiguration">The configuration of the data context.</param>
+        </member>
+        <member name="M:Mite.MiteDataContext.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteDataContext"/> class.
+            </summary>
+            <remarks>
+            The configuration is read from the app.config or web.config
+            </remarks>
+        </member>
+        <member name="M:Mite.MiteDataContext.GetDataMapper``1">
+            <summary>
+            Gets a data mapper for a type.
+            </summary>
+            <typeparam name="T">The type for which a data mapper should be retrieved</typeparam>
+            <returns>A data mapper for the type</returns>
+        </member>
+        <member name="T:Mite.Project">
+            <summary>
+            Project
+            </summary>
+        </member>
+        <member name="M:Mite.Project.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:Mite.Project"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:Mite.Project"/>.</param>
+            <returns>
+            true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:Mite.Project"/>; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Mite.Project.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:Mite.Project"/>.
+            </returns>
+        </member>
+        <member name="P:Mite.Project.BudgetType">
+            <summary>
+             Gets or sets the type of budget.
+            </summary>
+             <value>The budget type.</value>
+        </member>
+        <member name="P:Mite.Project.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Mite.Project.Note">
+            <summary>
+            Gets or sets the note.
+            </summary>
+            <value>The note.</value>
+        </member>
+        <member name="P:Mite.Project.Budget">
+            <summary>
+            Gets or sets the budget.
+            </summary>
+            <value>The budget.</value>
+        </member>
+        <member name="P:Mite.Project.Archived">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Mite.Project"/> is archived.
+            </summary>
+            <value><c>true</c> if archived; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Mite.Project.Customer">
+            <summary>
+            Gets or sets the customer.
+            </summary>
+            <value>The customer.</value>
+        </member>
+        <member name="P:Mite.Project.CreatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Project"/> was created.
+            </summary>
+            <value>The created on.</value>
+        </member>
+        <member name="P:Mite.Project.UpdatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Project"/> was updated.
+            </summary>
+            <value>The updated on.</value>
+        </member>
+        <member name="T:Mite.ProjectProxy">
+            <summary>
+            Proxy for project class
+            </summary>
+            <remarks>
+            Used for lazy loading of references
+            </remarks>
+        </member>
+        <member name="M:Mite.ProjectProxy.Equals(System.Object)">
+            <summary>
+            Compares this instance with the object provided in the parameter
+            </summary>
+            <param name="obj">The object for comparism.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Mite.ProjectProxy.GetHashCode">
+            <summary>
+            Serves as a hash function for this class.
+            </summary>
+            <returns>
+            A hash code for this class.
+            </returns>
+        </member>
+        <member name="P:Mite.ProjectProxy.Customer">
+            <summary>
+            Gets or sets the customer of this project.
+            </summary>
+            <value>The customer.</value>
+        </member>
+        <member name="T:Mite.MiteError">
+            <summary>
+            Error message of mite
+            </summary>
+        </member>
+        <member name="M:Mite.MiteError.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteError"/> class.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Mite.MiteError.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that contains the error message.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that contains the error message>.
+            </returns>
+        </member>
+        <member name="P:Mite.MiteError.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="T:Mite.MiteException">
+            <summary>
+            Exception which wrappes all HTTP-errors of mite (status codes 400 - 500)
+            </summary>
+        </member>
+        <member name="M:Mite.MiteException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteException"/> class.
+            </summary>
+        </member>
+        <member name="M:Mite.MiteException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteException"/> class.
+            </summary>
+            <param name="message">The exception message.</param>
+        </member>
+        <member name="M:Mite.MiteException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Mite.MiteException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.MiteException"/> class.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="info"/> parameter is null.
+            </exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException">
+            The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+            </exception>
+        </member>
+        <member name="P:Mite.MiteException.Errors">
+            <summary>
+            Gets or sets the list of errors.
+            </summary>
+            <value>The errors.</value>
+        </member>
+        <member name="T:Mite.Service">
+            <summary>
+            Service
+            </summary>
+        </member>
+        <member name="P:Mite.Service.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Mite.Service.Note">
+            <summary>
+            Gets or sets the note.
+            </summary>
+            <value>The note.</value>
+        </member>
+        <member name="P:Mite.Service.Billable">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Mite.Service"/> is billable.
+            </summary>
+            <value><c>true</c> if billable; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Mite.Service.HourlyRate">
+            <summary>
+            Gets or sets the hourly rate.
+            </summary>
+            <value>The hourly rate.</value>
+        </member>
+        <member name="P:Mite.Service.Archived">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Mite.Service"/> is archived.
+            </summary>
+            <value><c>true</c> if archived; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Mite.Service.CreatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Service"/>  was created.
+            </summary>
+            <value>The created on.</value>
+        </member>
+        <member name="P:Mite.Service.UpdatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.Service"/> was updated.
+            </summary>
+            <value>The modified on.</value>
+        </member>
+        <member name="T:Mite.User">
+            <summary>
+            A user of mite
+            </summary>
+        </member>
+        <member name="P:Mite.User.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Mite.User.Email">
+            <summary>
+            Gets or sets the email.
+            </summary>
+            <value>The email.</value>
+        </member>
+        <member name="P:Mite.User.Note">
+            <summary>
+            Gets or sets the note.
+            </summary>
+            <value>The note.</value>
+        </member>
+        <member name="P:Mite.User.Archived">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Mite.User"/> is archived.
+            </summary>
+            <value><c>true</c> if archived; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Mite.User.Createdon">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.User"/> was created.
+            </summary>
+            <value>The createdon.</value>
+        </member>
+        <member name="P:Mite.User.UpdatedOn">
+            <summary>
+            Gets or sets the date on which this <see cref="T:Mite.User"/> was updated. 
+            </summary>
+            <value>The updated on.</value>
+        </member>
+        <member name="P:Mite.User.Role">
+            <summary>
+            Gets or sets the role of the user.
+            </summary>
+            <value>The role.</value>
+        </member>
+        <member name="T:Mite.QueryExpression">
+            <summary>
+            Query for data selection
+            </summary>
+        </member>
+        <member name="M:Mite.QueryExpression.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mite.QueryExpression"/> class.
+            </summary>
+        </member>
+        <member name="P:Mite.QueryExpression.Conditions">
+            <summary>
+            Gets or sets the list of conditions.
+            </summary>
+            <value>The conditions.</value>
+        </member>
+    </members>
+</doc>
