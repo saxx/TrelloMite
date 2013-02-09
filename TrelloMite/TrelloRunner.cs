@@ -112,7 +112,7 @@ namespace TrelloMite
 
             if (!string.IsNullOrWhiteSpace(command))
             {
-                var match = Regex.Match(command, @"^(\d{2,4}[.-/]\d{1,2}[.-/]\d{1,2}) " + minutesPattern + "$", RegexOptions.IgnoreCase);
+                var match = Regex.Match(command, @"^(\d{1,4}[\.-/]\d{1,2}[\.-/]\d{1,4}) " + minutesPattern + "$", RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
                     if (!DateTime.TryParse(match.Groups[1].Value, new CultureInfo("de-AT"), DateTimeStyles.AssumeLocal, out date))
