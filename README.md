@@ -37,6 +37,8 @@ Put any of the following commands into a Trello card comment to log a time of 90
 	
 	#time 1,5
 	#time 1,5h
+	#time 1.5
+	#time 1.5h	
 	#time 90m
 	#time 1:30
 
