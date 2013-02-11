@@ -63,6 +63,9 @@ namespace TrelloMite
                             if (timeEntry != null)
                             {
                                 FindProjectAndCustomerAndService(card.Desc, oldCommentText, timeEntry);
+                                FindNotes(card.Desc, oldCommentText, card.Name, timeEntry);
+                                timeEntry.Notes += " (" + card.Url + ")";
+
                                 changeCommentText = true;
 
                                 Console.Write("Found " + timeEntry.Minutes + " minutes on " + timeEntry.Date.ToShortDateString() + " (customer: '" + timeEntry.Customer +
@@ -112,11 +115,11 @@ namespace TrelloMite
 
             if (!string.IsNullOrWhiteSpace(command))
             {
-                var match = Regex.Match(command, @"^(\d{1,4}[\.-/]\d{1,2}[\.-/]\d{1,4}) " + minutesPattern + "$", RegexOptions.IgnoreCase);
+                var match = Regex.Match(command, @"^(\d{1,4}[\.\-/]\d{1,2}[\.\-/]\d{1,4}) " + minutesPattern + "$", RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
-                    if (!DateTime.TryParse(match.Groups[1].Value, new CultureInfo("de-AT"), DateTimeStyles.AssumeLocal, out date))
-                        DateTime.TryParse(match.Groups[1].Value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out date);
+                    if (!DateTime.TryParse(match.Groups[1].Value, new CultureInfo("de-AT"), DateTimeStyles.None, out date))
+                        DateTime.TryParse(match.Groups[1].Value, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
                     minutes = ParseMinutes(match.Groups[2].Value);
                 }
 
@@ -183,6 +186,14 @@ namespace TrelloMite
             timeEntry.Project = FindCommand(cardDescription, commentText, "project") ?? "";
             timeEntry.Customer = FindCommand(cardDescription, commentText, "customer") ?? "";
             timeEntry.Service = FindCommand(cardDescription, commentText, "service") ?? "";
+        }
+
+        private void FindNotes(string cardDescription, string commentText, string cardTitle, TimeEntry timeEntry)
+        {
+            var notes = FindCommand(cardDescription, commentText, "notes");
+            if (string.IsNullOrWhiteSpace(notes))
+                notes = cardTitle;
+            timeEntry.Notes = notes;
         }
 
         private string FindCommand(string cardDescription, string commentText, string command)
