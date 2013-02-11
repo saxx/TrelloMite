@@ -35,24 +35,28 @@ Trello Syntax
 -------------
 Put any of the following commands into a Trello card comment to log a time of 90 minutes. Every such command needs to be on a line of its own, without any other text:
 	
-	#time 1,5
-	#time 1,5h
-	#time 1.5
-	#time 1.5h	
-	#time 90m
-	#time 1:30
+	@time 1,5
+	@time 1,5h
+	@time 1.5
+	@time 1.5h	
+	@time 90m
+	@time 1:30
 
 To log time for another date than the comments, use:
 	
-	#time 02/23/2013 1,5h
-	#time 23.02.2013 1,5h
-	#time 2012-02-23 1,5h
+	@time 02/23/2013 1,5h
+	@time 23.02.2013 1,5h
+	@time 2012-02-23 1,5h
 	
 You can specify the customer, project and service (as defined in Mite) either in the card description or the comment. TrelloMite tries to find this information in the comment first, then falls back to the card description. Every such command needs to be on a line of its own, without any other text:
 	
-	#customer My Customer
-	#project My Secret Project X
-	#service MyService
+	@customer My Customer
+	@project My Secret Project X
+	@service MyService
+	
+Per default, the Trello card title will be used as a note in the Mite time entry. You can override this behaviour by specifying:
+
+	@notes This is what I did ...
 	
 TrelloMite does not create automatically customers, projects or services, but will create an error message if it can't find any of them. You may specify defaults for these values in the configuration (see above).
 
