@@ -59,7 +59,7 @@ namespace TrelloMite
                         {
                             var newLine = oldLine;
 
-                            var timeEntry = FindTimeAndDate(comment.Date, oldLine);
+                            var timeEntry = FindTimeAndDate(comment.Data.DateLastEdited ?? comment.Date, oldLine);
                             if (timeEntry != null)
                             {
                                 FindProjectAndCustomerAndService(card.Desc, oldCommentText, timeEntry);
