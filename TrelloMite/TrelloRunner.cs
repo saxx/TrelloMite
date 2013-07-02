@@ -23,7 +23,7 @@ namespace TrelloMite
         {
         }
 
-        public void FindTimeEntries(Action<TimeEntry> saveTimeEntryCallback)
+        public void FindTimeEntries(Func<TimeEntry, MiteRunnerResult> saveTimeEntryCallback)
         {
             var cardsCount = 0;
             var commentsCount = 0;
@@ -73,8 +73,8 @@ namespace TrelloMite
 
                                 try
                                 {
-                                    saveTimeEntryCallback.Invoke(timeEntry);
-                                    newLine = newLine + " [mite ok]";
+                                    var miteResult = saveTimeEntryCallback.Invoke(timeEntry);
+                                    newLine = newLine + string.Format(" [mite ok: {0}; {1}; {2}]", miteResult.Customer, miteResult.Project, miteResult.Service);
                                     Console.WriteLine(" OK.");
                                     successes++;
                                 }
@@ -186,6 +186,21 @@ namespace TrelloMite
             timeEntry.Project = FindCommand(cardDescription, commentText, "project") ?? "";
             timeEntry.Customer = FindCommand(cardDescription, commentText, "customer") ?? "";
             timeEntry.Service = FindCommand(cardDescription, commentText, "service") ?? "";
+
+            var miteCommand = FindCommand(cardDescription, commentText, "mite") ?? "";
+            if (!string.IsNullOrEmpty(miteCommand))
+            {
+                var miteCommandArray = miteCommand.Split(';').Select(x => x.Trim()).ToArray();
+                if (miteCommandArray.Length == 3)
+                {
+                    if (string.IsNullOrEmpty(timeEntry.Customer))
+                        timeEntry.Customer = miteCommandArray[0];
+                    if (string.IsNullOrEmpty(timeEntry.Project))
+                        timeEntry.Project = miteCommandArray[1];
+                    if (string.IsNullOrEmpty(timeEntry.Service))
+                        timeEntry.Service = miteCommandArray[2];
+                }
+            }
         }
 
         private void FindNotes(string cardDescription, string commentText, string cardTitle, TimeEntry timeEntry)

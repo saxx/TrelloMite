@@ -21,10 +21,12 @@ namespace TrelloMite
                 _mite.Dispose();
         }
 
-        public void SaveTimeEntry(TimeEntry time)
+        public MiteRunnerResult SaveTimeEntry(TimeEntry time)
         {
             if (time == null)
                 throw new ArgumentNullException("time");
+
+            var result = new MiteRunnerResult();
 
             //set default values
             var project = string.IsNullOrWhiteSpace(time.Project) ? _configuration.DefaultProject : time.Project;
@@ -62,6 +64,12 @@ namespace TrelloMite
                     Project = foundProject,
                     Note = time.Notes
                 });
+
+            result.Customer = customer;
+            result.Project = foundProject.Name;
+            result.Service = foundService == null ? "" : foundService.Name;
+
+            return result;
         }
     }
 }

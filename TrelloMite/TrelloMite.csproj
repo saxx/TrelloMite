@@ -30,7 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mite">
+    <Reference Include="Mite, Version=1.2.5.0, Culture=neutral, PublicKeyToken=2c526ae7b3e40489, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Mite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -45,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiteRunnerResult.cs" />
     <Compile Include="MiteRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration.cs" />
