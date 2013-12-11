@@ -7,26 +7,8 @@ Makes heavy use of  https://github.com/dillenmeister/Trello.NET and https://gith
 
 Usage
 -----
-A little code says more than the longest documentation. See this powershell script on how to use TrelloMite:
 
-	add-type -Path "TrelloMite.dll"
-
-	$configuration = new-object -TypeName TrelloMite.Configuration
-
-	$configuration.Mite.ApiKey = "< YOUR MITE API KEY >";
-	$configuration.Mite.Uri = new-object -TypeName Uri -ArgumentList "https://< YOUR MITE URL >"
-	$configuration.Mite.DefaultCustomer = "< DEFAULT CUSTOMER >";
-	$configuration.Mite.DefaultProject = "< DEFAULT PROJECT >";
-	$configuration.Mite.DefaultService = "< DEFAULT SERVICE >";
-
-	$configuration.Trello.UserName = "< TRELLO USERNAME >";
-	$configuration.Trello.AppKey = "< TRELLO APP KEY >";
-	$configuration.Trello.UserToken = "< TRELLO USER TOKEN >";
-	$configuration.Trello.Board = "< TRELLO BOARD >";
-
-	$runner = New-Object -TypeName TrelloMite.Runner -ArgumentList $configuration
-
-	$runner.Run()
+    TrelloMite.exe --MiteApiKey <Your_Mite_Api_Key> --MiteUri <Your_Mite_URL> --MiteDefaultCustomer <Your_Mite_Default_Customer> --MiteDefaultProject <Your_Mite_Default_Project> --MiteDefaultService <Your_Mite_Default_Service> --TrelloUsername <Your_Trello_Username> --TrelloAppKey <Your_Trello_App_Key> --TrelloUserToken <Your_Trello_User_Token> --TrelloBoard <Your_Trello_Board>
 
 See your Mite options for a mite API key.
 See https://trello.com/1/appKey/generate for an Trello API key. Run TrelloMite once without a Trello usertoken and you'll get an error with a specific URL to generate your usertoken.

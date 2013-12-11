@@ -6,12 +6,12 @@ namespace TrelloMite
     {
         public Configuration()
         {
-            Mite=new MiteConfiguration();
+            Mite = new MiteConfiguration();
             Trello = new TrelloConfiguration();
         }
 
         public MiteConfiguration Mite { get; private set; }
-        public TrelloConfiguration Trello { get; private set; } 
+        public TrelloConfiguration Trello { get; private set; }
     }
 
     public class MiteConfiguration
