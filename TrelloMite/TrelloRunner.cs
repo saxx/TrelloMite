@@ -16,6 +16,8 @@ namespace TrelloMite
             _trello = new Trello(configuration.AppKey);
             _configuration = configuration;
 
+            _configuration.UserName = (_configuration.UserName ?? "").Trim('@');
+
             _trello.Authorize(configuration.UserToken);
         }
 
@@ -43,10 +45,10 @@ namespace TrelloMite
                 {
                     cardsCount++;
 
-                    var allActions = _trello.Actions.ForCard(card, new[] {ActionType.CommentCard});
+                    var allActions = _trello.Actions.ForCard(card, new[] { ActionType.CommentCard });
                     foreach (CommentCardAction comment in allActions)
                     {
-                        if (!comment.MemberCreator.Username.Equals(_configuration.UserName,StringComparison.InvariantCultureIgnoreCase))
+                        if (!comment.MemberCreator.Username.Equals(_configuration.UserName, StringComparison.InvariantCultureIgnoreCase))
                             continue;
 
                         commentsCount++;
@@ -80,7 +82,7 @@ namespace TrelloMite
                                 }
                                 catch (Exception ex)
                                 {
-                                    newLine = newLine + " [mite failed: " + ex.Message + "]";
+                                    newLine = newLine + " [@" + _configuration.UserName + " mite failed: " + ex.Message + "]";
                                     Console.WriteLine(" failed: " + ex.Message);
                                     fails++;
                                 }
