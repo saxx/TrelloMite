@@ -11,13 +11,13 @@ namespace TrelloMite
         [Option("MiteUri", Required = true, HelpText = "The URL of your mite instance.")]
         public string MiteUri { get; set; }
 
-        [Option("MiteDefaultCustomer", Required = true, HelpText = "The name of the mite customer that will be used if none is specified in the Trello card.")]
+        [Option("MiteDefaultCustomer", Required = false, HelpText = "The name of the mite customer that will be used if none is specified in the Trello card.")]
         public string MiteDefaultCustomer { get; set; }
 
-        [Option("MiteDefaultProject", Required = true, HelpText = "The name of the mite project that will be used if none is specified in the Trello card.")]
+        [Option("MiteDefaultProject", Required = false, HelpText = "The name of the mite project that will be used if none is specified in the Trello card.")]
         public string MiteDefaultProject { get; set; }
 
-        [Option("MiteDefaultService", Required = true, HelpText = "The name of the mite service that will be used if none is specified in the Trello card.")]
+        [Option("MiteDefaultService", Required = false, HelpText = "The name of the mite service that will be used if none is specified in the Trello card.")]
         public string MiteDefaultService { get; set; }
 
 
