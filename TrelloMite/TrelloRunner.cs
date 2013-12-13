@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using TrelloNet;
 
@@ -45,9 +47,15 @@ namespace TrelloMite
                 {
                     cardsCount++;
 
-                    var allActions = _trello.Actions.ForCard(card, new[] { ActionType.CommentCard });
+                    // we look for comments about failed mite actions
+                    // this improves perfomance because we only need on loop through all the comments and the code still is somehow readable
+                    var hasFailureComment = false;
+
+                    var allActions = _trello.Actions.ForCard(card, new[] {ActionType.CommentCard});
                     foreach (CommentCardAction comment in allActions)
                     {
+                        hasFailureComment = hasFailureComment || HasFailureComment(comment);
+
                         if (!comment.MemberCreator.Username.Equals(_configuration.UserName, StringComparison.InvariantCultureIgnoreCase))
                             continue;
 
@@ -82,7 +90,7 @@ namespace TrelloMite
                                 }
                                 catch (Exception ex)
                                 {
-                                    newLine = newLine + " [@" + _configuration.UserName + " mite failed: " + ex.Message + "]";
+                                    newLine = newLine + " [mite failed: " + ex.Message + "]";
                                     Console.WriteLine(" failed: " + ex.Message);
                                     fails++;
                                 }
@@ -95,6 +103,9 @@ namespace TrelloMite
                         if (changeCommentText)
                             _trello.Actions.ChangeText(comment, newCommentText);
                     }
+
+                    if (hasFailureComment)
+                        NotifyOtherUserAboutFailures(card);
                 }
             }
             catch (TrelloUnauthorizedException ex)
@@ -104,6 +115,32 @@ namespace TrelloMite
             }
 
             Console.WriteLine("Scanned " + cardsCount + " cards and " + commentsCount + " comments, with " + successes + " new entries and " + fails + " failed.");
+        }
+
+
+        private bool HasFailureComment(CommentCardAction comment)
+        {
+            return comment.Data.Text.Contains("[mite failed: ");
+        }
+
+
+        private void NotifyOtherUserAboutFailures(Card card)
+        {
+            const string failureComment = "Hey, @{0},  take care, there's a failed mite command.";
+
+            var allActions = _trello.Actions.ForCard(card, new[] {ActionType.CommentCard}).ToList();
+
+            var affectedUsers = (from CommentCardAction comment in allActions where HasFailureComment(comment) select comment.MemberCreator.Username).ToList().Distinct();
+
+            foreach (var affectedUser in affectedUsers.Where(x => x.ToLower() != _configuration.UserName))
+            {
+                var commentForUser = string.Format(failureComment, affectedUser);
+
+                var alreadyHasComment = allActions.Cast<CommentCardAction>().Any(comment => comment.Data.Text == commentForUser);
+
+                if (!alreadyHasComment)
+                    _trello.Cards.AddComment(card, commentForUser);
+            }
         }
 
 
